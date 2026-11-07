@@ -1,0 +1,72 @@
+.app-info {
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+    min-height: 280px;
+    margin-top: 24px;
+    padding: 84px 56px;
+    background: #000000;
+    border: 1px solid #232326;
+    border-radius: 22px;
+
+    // Большая сфера справа
+    &__sphere {
+        position: absolute;
+        top: -120px;
+        right: -80px;
+        width: 520px;
+        height: 520px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 35% 35%, #8A8A90 0%, #3A3A3F 38%, #0A0A0B 72%);
+    }
+
+    // Тонкое кольцо на сфере
+    &__ring {
+        position: absolute;
+        top: 70px;
+        right: 120px;
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        border: 1px solid #55555B;
+    }
+
+    &__content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        max-width: 560px;
+    }
+
+    &__title {
+        margin: 0;
+        font-size: 52px;
+        font-weight: 300;
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+        color: #F2F2F3;
+    }
+
+    &__text {
+        margin: 0;
+        font-size: 17px;
+        line-height: 1.5;
+        color: #B4B4BA;
+    }
+
+    &__btn {
+        align-self: flex-start;
+        padding: 12px 26px;
+        border: 1px solid #C0C0C0;
+        font-size: 15px;
+        color: #E6E6E8;
+        transition: background-color 0.2s, color 0.2s;
+
+        &:hover {
+            opacity: 1;
+            background-color: #C0C0C0;
+            color: #0B0B0B;
+        }
+    }
+}

@@ -1,0 +1,65 @@
+.app-banner {
+  background-color: #C0C0C0;
+  border-radius: 14px;
+  padding: 12px 18px;
+
+  .navbar-brand {
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: #0B0B0B;
+  }
+
+  .nav-link {
+    font-size: 15px;
+    color: #2B2B2E;
+
+    &:hover {
+      opacity: 0.75;
+    }
+
+    &.active {
+      font-weight: 600;
+      color: #0B0B0B;
+    }
+  }
+}
+
+
+.color-search-panel {
+  height: 44px !important;
+  width: 260px !important;
+  padding: 0 16px !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  background-color: #FFFFFF !important;
+  color: #0B0B0B !important;
+  font-size: 15px !important;
+
+  &::placeholder {
+    color: #6B6B72;
+  }
+
+  &:focus {
+    background-color: #FFFFFF;
+    color: #0B0B0B;
+    box-shadow: 0 0 0 3px rgba(14, 14, 16, 0.25);
+  }
+}
+
+.app-banner .btn {
+  height: 44px !important;
+  padding: 0 22px !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  background-color: #0E0E10 !important;
+  color: #FFFFFF !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+
+  &:hover,
+  &:focus-visible {
+    background-color: #26262A !important;
+    color: #FFFFFF !important;
+  }
+}

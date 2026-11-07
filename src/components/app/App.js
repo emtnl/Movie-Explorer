@@ -1,11 +1,17 @@
 import React from 'react';
 import '../../styles/app.scss';
-
+import AppBanner from '../appbanner/AppBanner';
+import AppInfo from '../appinfo/AppInfo';
+import AppCatalog from '../appcatalog/AppCatalog';
+import Footer from '../footer/Footer';
 const App = () => {
     return (
         <div className="app">
             <main>
-                My app
+                <AppBanner />
+                <AppInfo />
+                <AppCatalog />
+                <Footer/>
             </main>
         </div>
     );

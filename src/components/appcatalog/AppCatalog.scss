@@ -1,0 +1,60 @@
+.app-catalog {
+    margin-top: 48px;
+
+    &__head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 16px;
+    }
+
+    &__label {
+        font-size: 13px;
+        letter-spacing: 0.04em;
+        color: #A1A1A8;
+    }
+
+    &__title {
+        margin: 4px 0 0;
+        font-size: 30px;
+        font-weight: 400;
+        letter-spacing: -0.01em;
+        color: #F2F2F3;
+    }
+
+    &__sort {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+    }
+
+    &__sort-label {
+        margin-right: 6px;
+        font-size: 14px;
+        color: #A1A1A8;
+    }
+}
+
+.sort-pill {
+    padding: 8px 16px;
+    border: 1px solid #38383D;
+    border-radius: 999px;
+    background: transparent;
+    font-size: 14px;
+    color: #D6D6DA;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+
+    &:hover {
+        border-color: #C0C0C0;
+    }
+
+    &--active {
+        border-color: #C0C0C0;
+        background-color: #C0C0C0;
+        color: #0B0B0B;
+        font-weight: 500;
+    }
+}
