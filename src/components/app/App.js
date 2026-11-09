@@ -4,6 +4,7 @@ import AppBanner from '../appbanner/AppBanner';
 import AppInfo from '../appinfo/AppInfo';
 import AppCatalog from '../appcatalog/AppCatalog';
 import Footer from '../footer/Footer';
+import FilmList from '../filmlist/FilmList';
 const App = () => {
     return (
         <div className="app">
@@ -11,10 +12,12 @@ const App = () => {
                 <AppBanner />
                 <AppInfo />
                 <AppCatalog />
+                <FilmList />
                 <Footer/>
             </main>
         </div>
     );
+    
 };
 
 export default App;
