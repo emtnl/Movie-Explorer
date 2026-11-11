@@ -1,14 +1,20 @@
 import { useGetPopularFilmsQuery } from '../../api/ApiSlice';
 import FilmItem from '../filmitem/FilmItem';
 import './FilmList.scss';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import Pagination from './Pagination';
-
 
 const FilmList = () => {
     const [page, setPage] = useState(1);
     const { data, isLoading, isError } = useGetPopularFilmsQuery(page);
 
+    useEffect(() => {
+    const element = document.getElementById('film-list');
+    if (element) {
+        const y = element.getBoundingClientRect().top + window.pageYOffset - 100;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+    }, [page]); 
 
     if (isLoading) {
         return <p className="film-list__message">Загружаем фильмы...</p>;
@@ -20,7 +26,7 @@ const FilmList = () => {
 
     return (
         <>
-        <section className="film-list" aria-label="Популярные фильмы">
+        <section className="film-list" id="film-list" aria-label="Популярные фильмы">
             {data?.results?.length ? (
                 data.results.map(({ id, ...film }) => (
                     <FilmItem key={id} {...film} />
@@ -32,8 +38,12 @@ const FilmList = () => {
         
         <Pagination
             page={page}
-            onPrev={() => setPage((p) => p - 1)}
-            onNext={() => setPage((p) => p + 1)}
+            onPrev={() => {
+                setPage((p) => p - 1);
+            }}
+            onNext={() => {
+                setPage((p) => p + 1);
+            }}
         />
         </>
 

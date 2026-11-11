@@ -9,8 +9,11 @@ export const apiSlice = createApi({
     endpoints: builder => ({
         getPopularFilms: builder.query({
             query: (page = 1) => `/movie/popular?api_key=${TMDB_KEY}&language=ru-RU&page=${page}`,
+        }),
+        getFilmGenres: builder.query({
+            query: () => `genre/movie/list?api_key=${TMDB_KEY}&language=ru-RU`
         })
     })
 })
 
-export const {useGetPopularFilmsQuery} = apiSlice;
+export const {useGetPopularFilmsQuery, useGetFilmGenresQuery} = apiSlice;
