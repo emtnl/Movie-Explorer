@@ -1,13 +1,10 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { sortChange } from '../../reducer/MovieSlice';
 import './AppCatalog.scss';
 
-const sortOptions = [
-    { id: 'rating', label: 'По рейтингу' },
-    { id: 'year', label: 'По году' },
-    { id: 'title', label: 'По названию' },
-];
-
 const AppCatalog = () => {
-    const activeSort = 'rating'; // позже заменишь на состояние
+    const dispatch = useDispatch();
+    const activeFilter = useSelector(state => state.movie.activeFilter);
 
     return (
         <section className="app-catalog" id="top">
@@ -19,15 +16,30 @@ const AppCatalog = () => {
 
                 <div className="app-catalog__sort">
                     <span className="app-catalog__sort-label">Сортировка</span>
-                    {sortOptions.map(({ id, label }) => (
-                        <button
-                            key={id}
-                            type="button"
-                            className={`sort-pill${id === activeSort ? ' sort-pill--active' : ''}`}
-                        >
-                            {label}
-                        </button>
-                    ))}
+
+                    <button
+                        type="button"
+                        className={`sort-pill${activeFilter === 'vote_average.desc' ? ' sort-pill--active' : ''}`}
+                        onClick={() => dispatch(sortChange('vote_average.desc'))}
+                    >
+                        По рейтингу
+                    </button>
+
+                    <button
+                        type="button"
+                        className={`sort-pill${activeFilter === 'primary_release_date.desc' ? ' sort-pill--active' : ''}`}
+                        onClick={() => dispatch(sortChange('primary_release_date.desc'))}
+                    >
+                        По году
+                    </button>
+
+                    <button
+                        type="button"
+                        className={`sort-pill${activeFilter === 'original_title.asc' ? ' sort-pill--active' : ''}`}
+                        onClick={() => dispatch(sortChange('original_title.asc'))}
+                    >
+                        По названию
+                    </button>
                 </div>
             </div>
         </section>

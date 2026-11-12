@@ -1,15 +1,19 @@
-import { useGetPopularFilmsQuery } from '../../api/ApiSlice';
+import { useGetPopularFilmsQuery} from '../../api/ApiSlice';
 import FilmItem from '../filmitem/FilmItem';
 import './FilmList.scss';
 import {useState, useEffect} from 'react';
+import { useSelector } from 'react-redux';
 import Pagination from './Pagination';
 
 const FilmList = () => {
     const [page, setPage] = useState(1);
-    const { data, isLoading, isError } = useGetPopularFilmsQuery(page);
+    const activeFilter = useSelector(state => state.movie.activeFilter);
+    const { data, isLoading, isError } = useGetPopularFilmsQuery({ page, sortBy: activeFilter });
+   
 
     useEffect(() => {
     const element = document.getElementById('film-list');
+
     if (element) {
         const y = element.getBoundingClientRect().top + window.pageYOffset - 100;
         window.scrollTo({ top: y, behavior: 'smooth' });
