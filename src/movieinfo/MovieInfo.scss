@@ -1,0 +1,300 @@
+.movie-info {
+    margin-top: 24px;
+
+    &__back {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 44px;
+        font-size: 14px;
+        color: #A8A8AF;
+    }
+
+    &__poster {
+    flex: 0 0 220px;
+    align-self: flex-end;
+    width: 220px;
+    aspect-ratio: 2 / 3;
+    border: 1px solid #38383D;
+    border-radius: 14px;
+    background: linear-gradient(160deg, #6A6A72 0%, #1E1E22 100%);
+    box-shadow: 0 24px 50px rgba(0, 0, 0, 0.55);
+    object-fit: cover;
+    }
+
+    // ---------- Обложка ----------
+    &__cover {
+        position: relative;
+        display: flex;
+        align-items: flex-end;
+        overflow: hidden;
+        min-height: 480px;
+        margin-top: 4px;
+        border: 1px solid #232326;
+        border-radius: 22px;
+        // сюда потом можно подставить backdrop через style={{ backgroundImage: ... }}
+        background: linear-gradient(130deg, #55555C 0%, #232327 45%, #0A0A0B 100%);
+        background-size: cover;
+        background-position: center;
+    }
+
+    &__sphere {
+        position: absolute;
+        top: -140px;
+        right: -120px;
+        width: 560px;
+        height: 560px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 35% 35%, #8A8A90 0%, #3A3A3F 38%, rgba(10, 10, 11, 0) 72%);
+    }
+
+    // затемнение снизу, чтобы текст читался на любой картинке
+    &__shade {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 75%;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0) 100%);
+    }
+
+    &__head {
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        gap: 32px;
+        box-sizing: border-box;
+        width: 100%;
+        padding: 48px 48px 40px;
+    }
+
+    &__main {
+        display: flex;
+        flex: 1 1 340px;     // забирает всё место между постером и рейтингом
+        flex-direction: column;
+        gap: 16px;
+        min-width: 0;
+    }
+
+    &__rating {
+        flex: 0 0 auto;
+        // остальные стили без изменений
+    }
+
+    &__shade {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 100%;        // затемнение на всю высоту, чтобы текст читался на светлых кадрах
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.35) 60%, rgba(0, 0, 0, 0.15) 100%);
+    }
+
+    &__genres {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    &__genre {
+        padding: 6px 12px;
+        border: 1px solid #55555B;
+        border-radius: 999px;
+        background: rgba(14, 14, 16, 0.6);
+        font-size: 13px;
+        line-height: 1;
+        color: #F2F2F3;
+    }
+
+    &__title {
+        margin: 0;
+        font-size: 56px;
+        font-weight: 300;
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        color: #F2F2F3;
+    }
+
+    &__tagline {
+        margin: 0;
+        font-size: 17px;
+        line-height: 1.5;
+        color: #C9C9CE;
+    }
+
+    &__meta {
+        font-size: 14px;
+        color: #A8A8AF;
+    }
+
+    &__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 6px;
+    }
+
+    &__btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 44px;
+        padding: 0 24px;
+        border: 1px solid #C0C0C0;
+        border-radius: 10px;
+        background: transparent;
+        font-family: inherit;
+        font-size: 15px;
+        color: #E6E6E8;
+        cursor: pointer;
+        transition: background-color 0.2s, color 0.2s;
+
+        &:hover {
+            background-color: #C0C0C0;
+            color: #0B0B0B;
+        }
+
+        &--primary {
+            background: #C0C0C0;
+            font-weight: 500;
+            color: #0B0B0B;
+
+            &:hover {
+                background-color: #D8D8DB;
+            }
+        }
+    }
+
+    &__rating {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        padding: 18px 26px;
+        border: 1px solid #38383D;
+        border-radius: 16px;
+        background: rgba(14, 14, 16, 0.7);
+    }
+
+    &__rating-value {
+        font-size: 44px;
+        font-weight: 300;
+        line-height: 1;
+        letter-spacing: -0.02em;
+        color: #F2F2F3;
+    }
+
+    &__rating-votes {
+        font-size: 13px;
+        color: #A8A8AF;
+    }
+
+    // ---------- Контент ----------
+    &__body {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 40px;
+        margin-top: 44px;
+    }
+
+    &__content {
+        display: flex;
+        flex: 999 1 460px;
+        flex-direction: column;
+        gap: 44px;
+        min-width: 0;
+    }
+
+    &__label {
+        margin: 0 0 14px;
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #A8A8AF;
+    }
+
+    &__overview {
+        margin: 0;
+        font-size: 18px;
+        line-height: 1.65;
+        color: #E6E6E8;
+    }
+
+    // ---------- Актёры ----------
+    &__cast {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        gap: 20px;
+    }
+
+    &__actor {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    &__photo {
+        aspect-ratio: 1 / 1;
+        margin-bottom: 8px;
+        border-radius: 14px;
+        background: linear-gradient(160deg, #6A6A72 0%, #1E1E22 100%);
+
+        overflow: hidden;
+        
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+    }
+
+
+    &__actor-name {
+        font-size: 15px;
+        font-weight: 500;
+        color: #F2F2F3;
+    }
+
+    &__actor-role {
+        font-size: 13px;
+        color: #A8A8AF;
+    }
+
+    // ---------- Панель фактов ----------
+    &__facts {
+        display: flex;
+        flex: 1 1 300px;
+        flex-direction: column;
+        max-width: 380px;
+        padding: 8px 24px;
+        border: 1px solid #26262A;
+        border-radius: 16px;
+        background: #17171A;
+    }
+
+    &__fact {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 16px 0;
+        border-bottom: 1px solid #26262A;
+        font-size: 14px;
+
+        &:last-child {
+            border-bottom: 0;
+        }
+    }
+
+    &__fact-label {
+        color: #A8A8AF;
+    }
+
+    &__fact-value {
+        text-align: right;
+        color: #F2F2F3;
+    }
+}

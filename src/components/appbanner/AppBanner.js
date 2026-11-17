@@ -7,6 +7,10 @@ import { closeFilterModal, openFilterModal, sortChange } from '../../reducer/Mov
 import ModalBanner from './ModalBanner';
 import './appBanner.scss';
 
+
+
+
+
 const AppBanner = () => {
     const dispatch = useDispatch();
     const { isFilterModalOpen } = useSelector(state => state.movie);
@@ -38,7 +42,7 @@ const AppBanner = () => {
 
         <ModalBanner 
             isOpen={isFilterModalOpen} 
-            onClose={() => dispatch(closeFilterModal())} 
+            onClose={() => dispatch(closeFilterModal() )}
         />
         </>
     );
