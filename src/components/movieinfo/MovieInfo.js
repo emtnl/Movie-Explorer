@@ -1,11 +1,15 @@
 import './MovieInfo.scss';
-import { useGetMovieDetailsQuery, useGetMovieActorsQuery} from '../api/ApiSlice';
+import '../filmlist/FilmList.scss';
+import { useGetMovieDetailsQuery, useGetMovieActorsQuery, useGetMovieRecomendationQuery} from '../../api/ApiSlice';
 import { useParams, Link } from 'react-router-dom';
+import FilmItem from '../filmitem/FilmItem';
 const MovieInfo = () => {
     const { id } = useParams();
-    const {data: movie} = useGetMovieDetailsQuery(id);
-    const {data: credits} = useGetMovieActorsQuery(id);
+    const { data: movie, isLoading: isMovieLoading } = useGetMovieDetailsQuery(id);
+    const { data: credits, isLoading: isCreditsLoading } = useGetMovieActorsQuery(id);
+    const { data: reco, isLoading: isRecoLoading } = useGetMovieRecomendationQuery(id);
     const mainActors = credits?.cast?.slice(0, 10) || [];
+    const recommends = reco?.results || [];
     const DateFromat = (minutes) => {
         if (!minutes) return 'Неизвестно';
         return (`${~~(minutes / 60)}ч ${minutes % 60}мин`)
@@ -14,6 +18,8 @@ const MovieInfo = () => {
     if (!amount) return 'Неизвестно';
     return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(amount);
     }
+    const isLoading = isMovieLoading || isCreditsLoading || isRecoLoading;
+    if (isLoading) return <p>Загрузка...</p>;
     return (
         <article className="movie-info">
             <Link to="/" className="movie-info__back">
@@ -38,7 +44,7 @@ const MovieInfo = () => {
                     {movie?.backdrop_path ? (
                         <img
                             className="movie-info__poster"
-                            src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
+                            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                             alt={`Постер фильма «${movie?.title}»`}
                         />
                     ) : (
@@ -128,6 +134,21 @@ const MovieInfo = () => {
                         <span className="movie-info__fact-value">{formatMoney(movie?.revenue)}</span>
                     </div>
                 </aside>
+            </div>
+            <div className="movie-info__similar">
+                <h2 className="movie-info__subtitle">Похожие фильмы</h2>
+
+                <section className="film-list" aria-label="Похожие фильмы">
+                    {recommends.length ? (
+                        recommends.map(({ id, ...film }) => (
+                            <Link key={id} to={`/movie/${id}`} className="film-list__link">
+                                <FilmItem {...film} />
+                            </Link>
+                        ))
+                    ) : (
+                        <p className="film-list__message">Похожих фильмов не нашлось.</p>
+                    )}
+                </section>
             </div>
         </article>
     );

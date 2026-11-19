@@ -236,6 +236,18 @@
         gap: 2px;
     }
 
+    &__similar {
+        margin-top: 56px;
+    }
+
+    &__subtitle {
+        margin: 0;
+        font-size: 30px;
+        font-weight: 400;
+        letter-spacing: -0.01em;
+        color: #F2F2F3;
+    }
+
     &__photo {
         aspect-ratio: 1 / 1;
         margin-bottom: 8px;

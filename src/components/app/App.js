@@ -5,7 +5,8 @@ import AppInfo from '../appinfo/AppInfo';
 import AppCatalog from '../appcatalog/AppCatalog';
 import Footer from '../footer/Footer';
 import FilmList from '../filmlist/FilmList';
-import MovieInfo from '../../movieinfo/MovieInfo';
+import MovieInfo from '../movieinfo/MovieInfo';
+import ActorInfo from '../actorinfo/ActorInfo';
 import ScrollToTop from '../ScrollToTop';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 const App = () => {
@@ -18,10 +19,11 @@ const App = () => {
                     <Routes>
                         <Route path="/" element={
                             <>
-                                <AppInfo />
-                                <AppCatalog />
+                                {/* <AppInfo /> */}
+                                {/* <AppCatalog />
                                 <FilmList />
-                                <Footer/>
+                                <Footer/> */}
+                                <ActorInfo/>
                             </>
                         } />
 

@@ -44,8 +44,14 @@ export const apiSlice = createApi({
         }),
         getMovieActors: builder.query({
             query: (movieId) => `/movie/${movieId}/credits?api_key=${TMDB_KEY}&${language}`
+        }),
+        getMovieRecomendation: builder.query({
+            query: (movieId) => `/movie/${movieId}/recommendations?api_key=${TMDB_KEY}&${language}&page=1`
+        }),
+        getPersonDetails: builder.query({
+            query: (personId) => `/person/${personId}?api_key=${TMDB_KEY}&${language}&append_to_response=movie_credits`
         })
     })
 })
 
-export const {useGetPopularFilmsQuery, useGetFilmGenresQuery, useGetMovieDetailsQuery, useGetMovieActorsQuery} = apiSlice;
+export const {useGetPopularFilmsQuery, useGetFilmGenresQuery, useGetMovieDetailsQuery, useGetMovieActorsQuery, useGetMovieRecomendationQuery, useGetPersonDetailsQuery} = apiSlice;
