@@ -10,6 +10,10 @@
         color: #A8A8AF;
     }
 
+    &__films {
+        margin-top: 56px;
+    }
+
     &__layout {
         display: flex;
         flex-wrap: wrap;
@@ -27,6 +31,17 @@
         width: 320px;
         max-width: 100%;
     }
+
+    &__link {
+        display: block;
+        width: 100%;
+        max-width: 260px;
+
+        .film-card {
+            height: 100%;
+        }
+    }
+    
 
     &__photo {
         width: 100%;

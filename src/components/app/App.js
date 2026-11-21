@@ -19,16 +19,16 @@ const App = () => {
                     <Routes>
                         <Route path="/" element={
                             <>
-                                {/* <AppInfo /> */}
-                                {/* <AppCatalog />
+                                <AppInfo />
+                                 <AppCatalog />
                                 <FilmList />
-                                <Footer/> */}
-                                <ActorInfo/>
+                                <Footer/> 
+                                {/* <ActorInfo/> */}
                             </>
                         } />
 
                         <Route path="/movie/:id" element={<MovieInfo />} />
-
+                        <Route path="/person/:id" element={<ActorInfo />} />
                     </Routes>
                 </main>
             </div>

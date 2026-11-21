@@ -1,13 +1,21 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams} from 'react-router-dom';
 import './ActorInfo.scss';
 import {useGetPersonDetailsQuery} from '../../api/ApiSlice';
-
-
-
+import FilmItem from '../filmitem/FilmItem';
+import Pagination from '../filmlist/Pagination';
+import { useState } from 'react';
+import { sortChange } from '../../reducer/MovieSlice';
+import { useDispatch } from 'react-redux';
 const ActorInfo = () => {
-    const {data} = useGetPersonDetailsQuery(287);
-    console.log(data);
-    
+    const dispatch = useDispatch();
+    const { id } = useParams();
+    const {data} = useGetPersonDetailsQuery(id);
+    const [page, setPage] = useState(1);
+    const ITEMS_PER_PAGE = 12; // Сколько фильмов показывать на одной странице
+    const films = data?.movie_credits?.cast || [];
+    const startIndex = (page - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    const paginatedFilms = films.slice(startIndex, endIndex);
     return (
         <article className="actor-info">
             <Link to="/" className="actor-info__back">
@@ -41,23 +49,29 @@ const ActorInfo = () => {
                         </div>
                         <div className="actor-info__fact">
                             <span className="actor-info__fact-label">Место рождения</span>
-                            <span className="actor-info__fact-value">Чикаго, Иллинойс, США</span>
+                            <span className="actor-info__fact-value">{data?.place_of_birth}</span>
                         </div>
                         <div className="actor-info__fact">
                             <span className="actor-info__fact-label">Дата смерти</span>
-                            <span className="actor-info__fact-value"></span>
+                            <span className="actor-info__fact-value">{data?.deathday ? new Date(data.deathday).toLocaleDateString('ru-RU', { 
+                                    day: 'numeric', 
+                                    month: 'long', 
+                                    year: 'numeric' 
+                                }).replace(' г.', '')
+                                : 'Жив'}</span>
                         </div>
                         <div className="actor-info__fact">
                             <span className="actor-info__fact-label">Возраст</span>
-                            <span className="actor-info__fact-value">71 год</span>
+                            <span className="actor-info__fact-value">{data?.deathday ? data?.deathday.slice(0, 4) - data?.birthday.slice(0, 4)
+                            : new Date().getFullYear() - data?.birthday.slice(0, 4)}</span>
                         </div>
                         <div className="actor-info__fact">
                             <span className="actor-info__fact-label">Карьера</span>
-                            <span className="actor-info__fact-value">Актёр, режиссёр</span>
+                            <span className="actor-info__fact-value">{data?.known_for_department}</span>
                         </div>
                         <div className="actor-info__fact">
                             <span className="actor-info__fact-label">Фильмов</span>
-                            <span className="actor-info__fact-value">61</span>
+                            <span className="actor-info__fact-value">{data?.movie_credits?.cast.length || 0}</span>
                         </div>
                     </div>
                 </aside>
@@ -73,9 +87,9 @@ const ActorInfo = () => {
                         <h1 className="actor-info__name">{data?.also_known_as}</h1>
 
                         <div className="actor-info__life">
-                            <span>1948 — 2019</span>
-                            <span className="actor-info__dot" aria-hidden="true">·</span>
-                            <span>прожил 71 год</span>
+                            <span>{data?.deathday ? ` ${data?.birthday.slice(0, 4)} - ${data?.deathday.slice(0, 4)}` : null}</span>
+                            <span className="actor-info__dot" aria-hidden="true"></span>
+                            <span>{data?.deathday ? `Прожил ${data?.deathday.slice(0, 4) - data?.birthday.slice(0, 4)}` : null}</span>
                         </div>
 
                         <div className="actor-info__actions">
@@ -91,33 +105,43 @@ const ActorInfo = () => {
                         <p className="actor-info__bio">
                             {data?.biography}
                         </p>
-                        <button type="button" className="actor-info__more-btn">Читать полностью</button>
                     </section>
 
-                    <section id="filmography">
-                        <div className="actor-info__films-head">
-                            <div>
-                                <div className="actor-info__films-count">Всего: 61</div>
-                                <h2 className="actor-info__films-title">Фильмография</h2>
-                            </div>
+                </div>   {/* конец actor-info__main */}
+            </div>       {/* конец actor-info__layout */}
 
-                            <div className="actor-info__sort">
-                                <button type="button" className="sort-pill sort-pill--active">По рейтингу</button>
-                                <button type="button" className="sort-pill">По году</button>
-                            </div>
-                        </div>
+            {/* ---------- Фильмография на всю ширину ---------- */}
+            <section id="filmography" className="actor-info__films">
+                <div className="actor-info__films-head">
+                    <div>
+                        <div className="actor-info__films-count">Всего: {data?.movie_credits?.cast.length || 0}</div>
+                        <h2 className="actor-info__films-title">Фильмография</h2>
+                    </div>
 
-                        <div className="film-list" aria-label="Фильмография">
-                            {/* сюда карточки фильмов, как в «Похожих фильмах» */}
-                        </div>
-
-                        <div className="actor-info__more">
-                            <button type="button" className="actor-info__btn">Показать ещё</button>
-                        </div>
-                    </section>
-
+                    <div className="actor-info__sort">
+                        <button type="button" className="sort-pill sort-pill--active" onClick={() => dispatch(sortChange('vote_average.desc'))}>По рейтингу</button>
+                        <button type="button" className="sort-pill" onClick={() => dispatch(sortChange('primary_release_date.desc'))}>По году</button>
+                    </div>
                 </div>
-            </div>
+
+                <div className="film-list" aria-label="Фильмография">
+                    {paginatedFilms.length ? (
+                        paginatedFilms.map(({ id, ...film }) => (
+                            <Link key={id} to={`/movie/${id}`} className="film-list__link">
+                                <FilmItem {...film} />
+                            </Link>
+                        ))
+                    ) : (
+                        <p className="film-list__message">Фильмы не найдены.</p>
+                    )}
+                </div>
+
+                <Pagination
+                    page={page}
+                    onPrev={() => setPage((p) => Math.max(1, p - 1))}
+                    onNext={() => setPage((p) => p + 1)}
+                />
+            </section>
         </article>
     );
 };

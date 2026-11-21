@@ -2,6 +2,7 @@ import './MovieInfo.scss';
 import '../filmlist/FilmList.scss';
 import { useGetMovieDetailsQuery, useGetMovieActorsQuery, useGetMovieRecomendationQuery} from '../../api/ApiSlice';
 import { useParams, Link } from 'react-router-dom';
+import ActorInfo from '../actorinfo/ActorInfo';
 import FilmItem from '../filmitem/FilmItem';
 const MovieInfo = () => {
     const { id } = useParams();
@@ -96,6 +97,7 @@ const MovieInfo = () => {
                         <div className="movie-info__cast">
 
                             {mainActors.map(({id, name, character, profile_path}) => (
+                            <Link key={id} to={`/person/${id}`} className="film-list__link">
                             <div key={id} className="movie-info__actor">
                                 <div className="movie-info__photo">
                                     <img src={`https://image.tmdb.org/t/p/w200${profile_path}`} alt="actor" />
@@ -103,6 +105,7 @@ const MovieInfo = () => {
                                 <div className="movie-info__actor-name">{name}</div>
                                 <div className="movie-info__actor-role">{character}</div>
                             </div>
+                            </Link>
                             ))}
                         </div>
                     </section>
