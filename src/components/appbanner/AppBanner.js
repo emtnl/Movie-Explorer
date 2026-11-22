@@ -6,8 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { closeFilterModal, openFilterModal, sortChange } from '../../reducer/MovieSlice';
 import ModalBanner from './ModalBanner';
 import './appBanner.scss';
-
-
+import { Link, NavLink } from 'react-router-dom'
+import SearchPanel from './SearchPanel';
 
 
 
@@ -18,11 +18,11 @@ const AppBanner = () => {
         <>
         <Navbar expand="lg" className="app-banner">
             <Container fluid>
-                <Navbar.Brand href="#">Movie Explorer</Navbar.Brand>
+                <Navbar.Brand as={Link} to="/">Movie Explorer</Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
                     <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
-                        <Nav.Link href="#action1" active>Главная</Nav.Link>
+                        <Nav.Link as={NavLink} to="/" end>Главная</Nav.Link>
                         <Nav.Link onClick={() => dispatch(sortChange('vote_average.desc'))} href="#top">
                             Топ рейтинга
                         </Nav.Link>
@@ -36,6 +36,7 @@ const AppBanner = () => {
 
                         <Nav.Link onClick={() => dispatch(openFilterModal())}>Фильтр</Nav.Link>
                     </Nav>
+                    <SearchPanel/>
                 </Navbar.Collapse>
             </Container>
         </Navbar>

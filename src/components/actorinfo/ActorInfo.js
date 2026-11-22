@@ -7,15 +7,23 @@ import { useState } from 'react';
 import { sortChange } from '../../reducer/MovieSlice';
 import { useDispatch } from 'react-redux';
 const ActorInfo = () => {
+    const [sortBy, setSortBy] = useState('vote_average');
+    const collator = new Intl.Collator('ru-RU'); //для сортировки
     const dispatch = useDispatch();
     const { id } = useParams();
     const {data} = useGetPersonDetailsQuery(id);
     const [page, setPage] = useState(1);
     const ITEMS_PER_PAGE = 12; // Сколько фильмов показывать на одной странице
     const films = data?.movie_credits?.cast || [];
+    const sortedFilms = [...films].sort((a, b) => {
+        if (sortBy === 'release_date') {
+            return (b.release_date || '').localeCompare(a.release_date || '');
+        }
+        return b.vote_average - a.vote_average;
+    });
     const startIndex = (page - 1) * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
-    const paginatedFilms = films.slice(startIndex, endIndex);
+    const paginatedFilms = sortedFilms.slice(startIndex, endIndex);
     return (
         <article className="actor-info">
             <Link to="/" className="actor-info__back">
@@ -119,15 +127,15 @@ const ActorInfo = () => {
                     </div>
 
                     <div className="actor-info__sort">
-                        <button type="button" className="sort-pill sort-pill--active" onClick={() => dispatch(sortChange('vote_average.desc'))}>По рейтингу</button>
-                        <button type="button" className="sort-pill" onClick={() => dispatch(sortChange('primary_release_date.desc'))}>По году</button>
+                        <button type="button" className={`sort-pill${sortBy === 'vote_average' ? ' sort-pill--active' : ''}`} onClick={() => setSortBy('vote_average')}>По рейтингу</button>
+                        <button type="button" className={`sort-pill${sortBy === 'release_date' ? ' sort-pill--active' : ''}`} onClick={() => setSortBy('release_date')}>По году</button>
                     </div>
                 </div>
 
                 <div className="film-list" aria-label="Фильмография">
                     {paginatedFilms.length ? (
                         paginatedFilms.map(({ id, ...film }) => (
-                            <Link key={id} to={`/movie/${id}`} className="film-list__link">
+                            <Link key={id} to={`/movie/${id}`} className="actor-info__link">
                                 <FilmItem {...film} />
                             </Link>
                         ))

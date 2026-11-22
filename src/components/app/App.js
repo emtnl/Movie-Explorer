@@ -9,6 +9,7 @@ import MovieInfo from '../movieinfo/MovieInfo';
 import ActorInfo from '../actorinfo/ActorInfo';
 import ScrollToTop from '../ScrollToTop';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import SearchCatalog from '../SearchCatalog/SearchCatalog';
 const App = () => {
     return (
         <Router>
@@ -23,12 +24,12 @@ const App = () => {
                                  <AppCatalog />
                                 <FilmList />
                                 <Footer/> 
-                                {/* <ActorInfo/> */}
                             </>
                         } />
 
                         <Route path="/movie/:id" element={<MovieInfo />} />
                         <Route path="/person/:id" element={<ActorInfo />} />
+                        <Route path="/search/:query" element={<SearchCatalog />} />
                     </Routes>
                 </main>
             </div>
