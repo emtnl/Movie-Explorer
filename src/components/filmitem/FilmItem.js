@@ -1,7 +1,7 @@
 import Card from 'react-bootstrap/Card';
 import './FilmItem.scss';
 import { useGetFilmGenresQuery } from '../../api/ApiSlice';
-
+import { useParams } from 'react-router-dom';
 
 
 const FilmItem = ({ title, overview, poster_path, vote_average, release_date, genre_ids}) => {
@@ -10,7 +10,6 @@ const FilmItem = ({ title, overview, poster_path, vote_average, release_date, ge
         : 'Описание фильма пока недоступно.';
 
     const {data} = useGetFilmGenresQuery();
-
     return (
         <Card className="film-card">
             {poster_path ? (

@@ -5,6 +5,10 @@ import { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import Pagination from './Pagination';
 import { Link } from 'react-router-dom'
+import Spinner from '../../spinner/Spinner';
+import ListErrors from '../../Errors/ListErrors';
+
+
 
 const FilmList = () => {
     const [page, setPage] = useState(1);
@@ -12,7 +16,7 @@ const FilmList = () => {
     const filters = useSelector((state) => state.movie.filters);
     const isFirstRender = useRef(true);
 
-    const { data, isLoading, isError } = useGetPopularFilmsQuery({
+    const { data, isLoading, isError, refetch } = useGetPopularFilmsQuery({
         page,
         sortBy: activeFilter,
         ...filters,
@@ -39,11 +43,11 @@ const FilmList = () => {
     }, [page]);
 
     if (isLoading) {
-        return <p className="film-list__message">Загружаем фильмы...</p>;
+        return <Spinner />
     }
 
     if (isError) {
-        return <p className="film-list__message film-list__message--error">Не удалось загрузить фильмы. Попробуйте позже.</p>;
+        return <ListErrors onRetry={refetch} />
     }
 
     return (

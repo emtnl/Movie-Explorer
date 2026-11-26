@@ -4,12 +4,16 @@ import { useGetMovieDetailsQuery, useGetMovieActorsQuery, useGetMovieRecomendati
 import { useParams, Link } from 'react-router-dom';
 import ActorInfo from '../actorinfo/ActorInfo';
 import FilmItem from '../filmitem/FilmItem';
+import ComponentError from '../../Errors/ComponentError';
+import Spinner
+ from '../../spinner/Spinner';
 const MovieInfo = () => {
     const { id } = useParams();
     const { data: movie, isLoading: isMovieLoading } = useGetMovieDetailsQuery(id);
     const { data: credits, isLoading: isCreditsLoading } = useGetMovieActorsQuery(id);
-    const { data: reco, isLoading: isRecoLoading } = useGetMovieRecomendationQuery(id);
+    const { data: reco, isLoading: isRecoLoading, isError} = useGetMovieRecomendationQuery(id);
     const mainActors = credits?.cast?.slice(0, 10) || [];
+    const director = credits?.crew?.find(person => person.job === 'Director');
     const recommends = reco?.results || [];
     const DateFromat = (minutes) => {
         if (!minutes) return 'Неизвестно';
@@ -20,7 +24,9 @@ const MovieInfo = () => {
     return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(amount);
     }
     const isLoading = isMovieLoading || isCreditsLoading || isRecoLoading;
-    if (isLoading) return <p>Загрузка...</p>;
+    if (isLoading) return <Spinner />
+
+    if (isError) return <ComponentError/>
     return (
         <article className="movie-info">
             <Link to="/" className="movie-info__back">
@@ -114,7 +120,7 @@ const MovieInfo = () => {
                 <aside className="movie-info__facts">
                     <div className="movie-info__fact">
                         <span className="movie-info__fact-label">Режиссёр</span>
-                        <span className="movie-info__fact-value">Андрей Соловьёв</span>
+                        <span className="movie-info__fact-value">{director ? director.name : 'Неизвестно'}</span>
                     </div>
                     <div className="movie-info__fact">
                         <span className="movie-info__fact-label">Оригинальное название</span>

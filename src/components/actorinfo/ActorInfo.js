@@ -6,12 +6,13 @@ import Pagination from '../filmlist/Pagination';
 import { useState } from 'react';
 import { sortChange } from '../../reducer/MovieSlice';
 import { useDispatch } from 'react-redux';
+import ComponentError from '../../Errors/ComponentError';
 const ActorInfo = () => {
     const [sortBy, setSortBy] = useState('vote_average');
     const collator = new Intl.Collator('ru-RU'); //для сортировки
     const dispatch = useDispatch();
     const { id } = useParams();
-    const {data} = useGetPersonDetailsQuery(id);
+    const {data, isError} = useGetPersonDetailsQuery(id);
     const [page, setPage] = useState(1);
     const ITEMS_PER_PAGE = 12; // Сколько фильмов показывать на одной странице
     const films = data?.movie_credits?.cast || [];
@@ -24,6 +25,9 @@ const ActorInfo = () => {
     const startIndex = (page - 1) * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
     const paginatedFilms = sortedFilms.slice(startIndex, endIndex);
+
+    if (isError) return <ComponentError/>
+
     return (
         <article className="actor-info">
             <Link to="/" className="actor-info__back">
@@ -70,8 +74,8 @@ const ActorInfo = () => {
                         </div>
                         <div className="actor-info__fact">
                             <span className="actor-info__fact-label">Возраст</span>
-                            <span className="actor-info__fact-value">{data?.deathday ? data?.deathday.slice(0, 4) - data?.birthday.slice(0, 4)
-                            : new Date().getFullYear() - data?.birthday.slice(0, 4)}</span>
+                            <span className="actor-info__fact-value">{data?.deathday ? data?.deathday?.slice(0, 4) - data?.birthday?.slice(0, 4)
+                            : new Date().getFullYear() - data?.birthday?.slice(0, 4)}</span>
                         </div>
                         <div className="actor-info__fact">
                             <span className="actor-info__fact-label">Карьера</span>
